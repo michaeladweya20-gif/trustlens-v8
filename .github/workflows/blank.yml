@@ -1,0 +1,22 @@
+name: Build APK Free
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - name: Install deps
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk zip unzip
+          pip install buildozer==1.5.0 cython==0.29.33
+      - name: Build APK
+        run: buildozer android debug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrustLens-V8-APK
+          path: bin/*.apk
