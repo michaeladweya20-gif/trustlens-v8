@@ -1,4 +1,4 @@
-k[9/18, 22:21] +254 700 217805: import os
+[9/18, 22:21] +254 700 217805: import os
 os.environ['KIVY_GL_BACKEND'] = 'sdl2'
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
