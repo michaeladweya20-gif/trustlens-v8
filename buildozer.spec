@@ -1,11 +1,11 @@
 [app]
 title = TrustLens V8
 package.name = trustlensv8
-package.domain = com.eldoret.trustlensv8
+package.domain = com.trustlens.app
 source.dir =.
 source.include_exts = py,png,jpg,kv,atlas
 version = 0.1
-requirements = python3,kivy
+requirements = python3,kivy==2.2.0
 orientation = portrait
 fullscreen = 0
 
@@ -17,7 +17,6 @@ warn_on_root = 1
 p4a.accept_sdk_license_agreements = True
 android.api = 33
 android.minapi = 21
-android.sdk = 33
 android.ndk = 25b
-android.build_tools_version = 33.0.2
+android.sdk = 33
 android.ant_path = /usr/bin/ant
