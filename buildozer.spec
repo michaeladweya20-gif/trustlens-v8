@@ -12,10 +12,8 @@ orientation = portrait
 log_level = 2
 
 [app:android]
-p4a.accept_sdk_license_agreements = True
 android.api = 33
 android.minapi = 21
 android.ndk = 25b
-android.sdk = 33
-android.build_tools_version = 33.0.2
 android.accept_sdk_license_agreements = True
+p4a.accept_sdk_license_agreements = True
