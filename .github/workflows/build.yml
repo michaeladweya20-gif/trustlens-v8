@@ -8,8 +8,7 @@ jobs:
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1.5
         with:
-          workdir:.
-          buildozer_version: stable
+          workdir:.buildozer_version: stable
           command: buildozer android debug
       - name: Upload APK
         uses: actions/upload-artifact@v4
