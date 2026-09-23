@@ -15,12 +15,23 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pip openjdk-17-jdk unzip wget zip libncurses5-dev libffi-dev libssl-dev automake autoconf libtool pkg-config zlib1g-dev libltdl-dev
+          sudo apt install -y python3-pip openjdk-17-jdk unzip wget zip libffi-dev libssl-dev
           pip install --upgrade pip
           pip install buildozer cython==0.29.36
 
+      - name: Accept Android licenses
+        run: |
+          mkdir -p ~/.android
+          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > ~/.android/repositories.cfg || true
+
       - name: Build APK
         run: |
+          yes | buildozer android debug || true
+          # Find sdkmanager and accept all licenses
+          SDKMGR=$(find ~/.buildozer -name sdkmanager | head -n 1)
+          yes | $SDKMGR --licenses || true
+          $SDKMGR "build-tools;34.0.0" "platform-tools" || true
+          # Now build for real
           buildozer android debug
 
       - name: Upload APK
