@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
@@ -18,11 +17,18 @@ jobs:
           pip install "cython==0.29.33" "buildozer==1.5.0"
 
       - name: Build APK
+        id: build
+        continue-on-error: true
         run: |
-          yes | buildozer android debug
+          yes | buildozer android debug 2>&1 | tail -n 200
+          echo "=== LIST BIN ==="
+          ls -lh bin/ || echo "NO BIN FOLDER"
+          find. -maxdepth 3 -name "*.apk" 2>/dev/null || echo "NO APK FOUND"
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: TrustLens-V8-APK
-          path: bin/*.apk
+      - name: Show buildozer log tail
+        if: always()
+        run: |
+          echo "=== LAST 100 LINES OF BUILDOZER LOG ==="
+          tail -n 100.buildozer/android/platform/build-*/build.log 2>/dev/null || echo "no build.log"
+          echo "=== CHECK MAIN.PY ==="
+          ls -lh main.py || echo "main.py MISSING!"
