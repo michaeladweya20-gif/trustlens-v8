@@ -7,7 +7,7 @@ source.dir =.
 source.include_exts = py,png,jpg,kv,atlas,json
 
 version = 0.8
-requirements = python3,kivy
+requirements = python3,kivy==2.2.0
 orientation = portrait
 
 [buildozer]
