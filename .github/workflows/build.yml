@@ -1,38 +1,25 @@
 name: Build APK
 on: [push]
-
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pip openjdk-17-jdk unzip wget zip libffi-dev libssl-dev
+          sudo apt install -y openjdk-17-jdk python3-pip zip unzip libffi-dev libssl-dev
           pip install --upgrade pip
-          pip install buildozer cython==0.29.36
-
-      - name: Accept Android licenses
-        run: |
-          mkdir -p ~/.android
-          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > ~/.android/repositories.cfg || true
+          pip install "cython==0.29.33" "buildozer==1.5.0"
 
       - name: Build APK
         run: |
-          yes | buildozer android debug || true
-          # Find sdkmanager and accept all licenses
-          SDKMGR=$(find ~/.buildozer -name sdkmanager | head -n 1)
-          yes | $SDKMGR --licenses || true
-          $SDKMGR "build-tools;34.0.0" "platform-tools" || true
-          # Now build for real
-          buildozer android debug
+          yes | buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
