@@ -15,5 +15,5 @@ android.archs = arm64-v8a
 p4a.branch = v2024.01.21
 
 [buildozer]
-log_level = 1
+log_level = 2
 warn_on_root = 1
