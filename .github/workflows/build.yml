@@ -19,7 +19,17 @@ jobs:
 
       - name: Build APK
         run: |
-          yes | buildozer android debug
+          set -o pipefail
+          yes | buildozer android debug 2>&1 | tee build.log | tail -n 500
+          echo "=== TAIL OF LOG ==="
+          tail -n 300 build.log
+
+      - name: Upload log on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
 
       - name: Upload APK
         if: always()
